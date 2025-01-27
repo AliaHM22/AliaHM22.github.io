@@ -1,0 +1,5 @@
+cd AliaHM22.github.io
+
+git add -A
+git commit -m "Added homepage"
+git push origin main

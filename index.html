@@ -1,0 +1,116 @@
+<!DOCTYPE html> 
+<html lang="eng">
+    <head>
+        <meta charset="UTF-8">
+        <meta name = "Keywords" content="Alia, Javascript, Portfolio">
+        <meta name=" viewport" content="width=device-width, inital-scale=1.0">
+        <title>Alia Hussein Mohamoud Portfolio</title>
+        <link rel="stylesheet" href="style/style.css">
+    </head> 
+
+        <style>
+            * {
+                /*margin: 0;*/
+            }
+
+            body {
+                font-size: 20px;
+                background-color: lightsteelblue;
+                border-width: 4px;
+                border-style: lines,solid;
+                font-family: 'Times New Roman', Times, serif;
+            }
+
+            h1{
+                color: rgb(244);
+                font-size: 65px;
+                background-color: grey;
+                border-width: 5px;
+                border-style: line,solid;
+                font-family: 'Times New Roman', Times, serif;
+                text-align: center;
+            }
+
+            #conditions {
+                color: lightcoral;
+            }
+
+            .centerText {
+                text-align: center;
+            }
+
+            /* pseudo-class */
+            button:hover {
+                background-color: #D95D39;
+            }
+
+            /* attritibute selector*/
+            input[type="text"]{
+                background-color: lightgoldenrodyellow;
+            }
+
+            img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            display: block;
+            margin-right: 20px;
+}
+.content-container {
+        display: flex;
+        align-items: center; 
+        margin: 20px;
+    }
+
+    .passage-box {
+        border: 2px solid maroon;
+        padding: 20px;
+        background-color: lightcoral;
+        width: 60%; 
+    }
+    .theme-buttons {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .theme-buttons button {
+        margin: 10px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    
+    .theme-text {
+        text-align: center;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+        </style>
+
+    <body id="pageBody">
+        <h1 class="centerText">Alia Hussein Mohamoud Portfolio</h1>
+
+        <div class="content-container">
+        <img src="Alia.jpg">
+
+        <div class="passage-box">
+            <p>Hello! I'm Alia Hussein Mohamoud,a weber state university student that's majoring in Computer Science.I'm a graduate of 2026. I've always been interested in technologies that's what lead me to taking computer science.I'm a beginner in coding and other stuff so I'm really interested in learning coding, web development and cybersecurity.Outside of the computer science world, my interests are fashion, learning new languages and cooking or baking.I like to travel alot and take photographs.  </p>
+        </div>
+    </div>
+    
+            <hr>
+            <h3>Settings</h3>
+            <h4>Try it out!!</h4>
+            <div class="theme-buttons">
+                <button onclick="document.body.style.backgroundColor = 'lightsteelblue'; document.body.style.color = 'black'; document.getElementById('themeText').innerHTML = 'Current Theme: Light Mode'">Light Mode</button>
+                <button onclick="document.body.style.backgroundColor = '#333'; document.body.style.color = 'white'; document.getElementById('themeText').innerHTML = 'Current Theme: Dark Mode'">Dark Mode</button>
+                <button onclick="document.body.style.backgroundColor = '#f0f0f0'; document.body.style.color = 'black'; document.getElementById('themeText').innerHTML = 'Current Theme: Neutral Mode'">Neutral Mode</button>
+            </div>
+        <div class="theme-text" id="themeText">Current Theme: Light Mode</div>
+
+        <p>&copy; Copyright 2025 Alia Mohamoud. All rights reserved</p>
+
+        <script>
+
+        </script>
+    </body>
+</html>

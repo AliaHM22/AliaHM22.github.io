@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Geometric Calculator</title>
+    </head>
+    <body>
+        <h1>Geometric Calculator</h1>
+        <hr>
+        <p>My <a href="file:///C:/Users/aliah/OneDrive/Desktop/WSU/WEB%201430/Lab%20Portfolio%20Site%20Setup/index.html">Portfolio Website</a>!</p>
+
+        <h2>Pyramid</h2>
+        <p>Base side length: <input type="number" 
+            id="pyramidBase" placeholder="Enter base side length"></p>
+        <img src="Pyramid.png" width="100">
+        <p>Base side length: <input type="number" id="pyramidBase" placeholder="Enter Base side length"></p>
+        <p>Height:<input type="number" id="pyramidHeight" placeholder="Enter height="></p>
+        <button onclick="calculatePyramidVolume()">Calculate Volume</button>
+        <button onclick="calculatePyramidSurfaceArea()">Calculate Pyramid Surface Area</button>
+        <p>Volume:<span id="pyramidVolumeResult"></span></p>
+        <br><hr>
+
+        <h2>Circle</h2>
+        <img src="circle.jpg" alt="Circle" width="100">
+        <p>Radius: <input type="number" id="circleRadius" placeholder="Enter radius"></p>
+        <button onclick="calculateCircleArea()">Calculate Circle Area</button>
+        <button onclick="calculateCirclePerimeter()">Calculate Circle Perimeter</button>
+        <p>Area:<span id="circleAreaResult"></span></p>
+        <p>Perimeter:<span id="circlePerimeterResult"></span></p>
+        <br><hr>
+
+        <h2>Rectangular Prism</h2>
+        <img src="rectangular.webp" alt="Rectangular Prism" width="100">
+        <p>Length: <input type="number" id="prismLength" placeholder="Enter length"></p>
+        <p>Width: <input type="number" id="prismWidth" placeholder="Enter width"></p>
+        <p>Height: <input type="number" id="prismHeight" placeholder="Enter height"></p>
+        <button onclick="calculatePrismVolume()">Calculate Volume</button>
+        <button onclick="calculatePrismSurfaceArea()">Calculate surface area</button>
+        <p>Volume:<span id="prismVolumeResult"></span></p>
+        <p>Surface Area: <span id="prismSurfaceAreaResult"></span></p>
+        <br><hr>
+
+        <script>
+            function calculatePyramidVolume(){
+                const base = parseFloat(document.getElementById('pyramidBase').value);
+                const height = parseFloat(document.getElementById('pyramidHeight').value);
+                const volume = (1 / 3) * Math.pow(base, 2) * height;                
+                document.getElementById('pyramidVolumeResult').innerHTML = volume.toFixed(2);
+            }
+
+            function calculatePyramidSurfaceArea() {
+                const base = parseFloat(document.getElementById('pyramidBase').value);
+                const height = parseFloat(document.getElementById('pyramidHeight').value);
+                const slantHeight = Math.sqrt(Math.pow(height, 2) + Math.pow(base / 2, 2));
+                const surfaceArea = Math.pow(base, 2) + 2 * base * slantHeight;
+                document.getElementById('pyramidSurfaceAreaResult').innerHTML = surfaceArea.toFixed(2);
+            }
+
+            function calculateCircleArea() {
+                const radius = parseFloat(document.getElementById('circleRadius').value);
+                const area = Math.PI * Math.pow(radius, 2);
+                document.getElementById('circleAreaResult').innerHTML = area.toFixed(2);
+            }
+
+            function calculateCirclePerimeter() {
+                const radius = parseFloat(document.getElementById('circleRadius').value);
+                const perimeter = 2 * Math.PI * radius;
+                document.getElementById('circlePerimeterResult').innerHTML = perimeter.toFixed(2);
+            }
+
+            // Rectangular Prism Calculations
+            function calculatePrismVolume() {
+                const length = parseFloat(document.getElementById('prismLength').value);
+                const width = parseFloat(document.getElementById('prismWidth').value);
+                const height = parseFloat(document.getElementById('prismHeight').value);
+                const volume = length * width * height;
+                document.getElementById('prismVolumeResult').innerHTML = volume.toFixed(2);
+            }
+
+            function calculatePrismSurfaceArea() {
+                const length = parseFloat(document.getElementById('prismLength').value);
+                const width = parseFloat(document.getElementById('prismWidth').value);
+                const height = parseFloat(document.getElementById('prismHeight').value);
+                const surfaceArea = 2 * (length * width + width * height + length * height);
+                document.getElementById('prismSurfaceAreaResult').innerHTML = surfaceArea.toFixed(2);
+            }
+        </script>
+
+    </body>
+</html>

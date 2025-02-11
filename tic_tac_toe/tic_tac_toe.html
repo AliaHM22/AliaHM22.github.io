@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic-Tac-Toe</title>
+    <script src="script.js"></script>
+    <style>
+        button {
+            width: 100px;
+            height: 50px;
+            font-size: 25px;
+        }
+        .reset {
+            margin-top: 10px;
+            font-size: 18px;
+            background-color:beige;
+            color:brown;
+            padding: 10px;
+            border: solid, groove;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        body {
+            background-color: lightsteelblue;
+        }
+        h1 {
+            font-family: 'Times New Roman', Times, serif;
+            text-align: center;
+            border-width: 7px;
+            border-style: line,solid;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tic-Tac-Toe</h1>
+    <table>
+        <tr>
+            <td><button id="a1" onclick="changeMark('a1')"></button></td>
+            <td><button id="b1" onclick="changeMark('b1')"></button></td>
+            <td><button id="c1" onclick="changeMark('c1')"></button></td>
+        </tr>
+        <tr>
+            <td><button id="a2" onclick="changeMark('a2')"></button></td>
+            <td><button id="b2" onclick="changeMark('b2')"></button></td>
+            <td><button id="c2" onclick="changeMark('c2')"></button></td>
+        </tr>
+        <tr>
+            <td><button id="a3" onclick="changeMark('a3')"></button></td>
+            <td><button id="b3" onclick="changeMark('b3')"></button></td>
+            <td><button id="c3" onclick="changeMark('c3')"></button></td>
+        </tr>
+    </table>
+    <button class="reset" onclick="resetGame()">Reset the game</button>
+
+    <p>&copy; Copyright 2025 Alia Mohamoud. All rights reserved.</p>
+</body>
+</html>

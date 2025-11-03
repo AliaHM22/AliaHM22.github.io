@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DOM Puzzle</title>
+        <style>
+            #puzzle {
+                width: 500px;
+                height: 500px;
+                border: 5px solid black;
+                position: relative;
+                margin-top: 10px;
+            }
+
+            button {
+                width: 40px;
+                height: 40px;
+                border: 1px solid gray;
+                background-color: white;
+                position: absolute;
+            }
+
+            .lighted {
+                background-color: purple;
+            }
+
+            .adjacent {
+                background-color: lightblue;
+            }
+            #puzzle.highlighted {
+                border-color: palegoldenrod;
+            }
+
+            .control-btn {
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                font-weight: bold;
+                z-index: 10;
+      }
+
+        .control-btn.A { top: 10px; left: 10px; background-color: lightcoral; }
+        .control-btn.B { top: 10px; left: 60px; background-color: lightcoral; }
+        .control-btn.C { top: 60px; left: 10px; background-color: skyblue; }
+        .control-btn.D { top: 60px; left: 60px; background-color: skyblue; }
+
+        </style>
+    </head>
+    <body>
+        <h1>DOM Puzzle</h1>
+
+        <div id='puzzle'></div>
+
+        <p> Click a button to change its color.</p>
+
+        <script>
+        function setupPuzzle() {
+            const puzzleContainer = document.getElementById('puzzle');
+            const puzzleButtons = [];
+
+            const labels = ['A', 'B', 'C', 'D'];
+            labels.forEach(label => {
+                const controlBtn = document.createElement('button');
+                controlBtn.textContent = label;
+                controlBtn.classList.add('control-btn', label);
+                if (label === 'A') {
+                    controlBtn.style.top = '10px';
+                    controlBtn.style.left = '10px';
+                } else if (label === 'B') {
+                    controlBtn.style.top = '10px';
+                    controlBtn.style.right = '10px';
+                } else if (label === 'C') {
+                    controlBtn.style.bottom = '10px';
+                    controlBtn.style.left = '10px';
+                } else if (label === 'D') {
+                    controlBtn.style.bottom = '10px';
+                    controlBtn.style.right = '10px';
+    }
+                //controlBtn.style.top = `${20 + (i < 2 ? 0 : 60)}px`;
+                //controlBtn.style.left = `${20 + (i % 2) * 60}px`;
+                puzzleContainer.appendChild(controlBtn);
+            });
+
+            const rows = 10;
+            const cols = 10;
+            const offset = 55;     // space for top control buttons
+            const spacing = 42;       // space for control buttons
+
+
+            for (let i = 0; i < rows * cols; i++) {
+                const button = document.createElement('button');
+                button.classList.add('puzzle-btn');
+                button.setAttribute('data-index', i);
+                const row = Math.floor(i / cols);
+                const col = i % cols;
+                button.style.top = `${row * spacing + 50}px`;
+                button.style.left = `${col * spacing + 50}px`;
+                //button.style.position = 'absolute';
+                //const offset = 60; // Adjusted offset to fit within the puzzle container
+                //button.style.top = `${Math.floor(i / 10) * 42 + offset}px`;
+                //button.style.left = `${Math.floor (i % 10) * 42 + offset}px`;
+
+                puzzleButtons.push(button);
+                puzzleContainer.appendChild(button);
+
+                button.addEventListener('click', function() {
+                    changeButtonColor(i);
+                });
+            }
+
+            puzzleContainer.addEventListener('mouseenter', function() {
+                puzzleContainer.classList.add('highlighted');
+            });
+
+            puzzleContainer.addEventListener('mouseleave', function() {
+                puzzleContainer.classList.remove('highlighted');
+            });
+        }
+
+        function changeButtonColor(index) {
+            const puzzleContainer = document.getElementById('puzzle');
+            const puzzleButtons = Array.from(puzzleContainer.querySelectorAll('#puzzle > button:not(.control-btn)'));
+            //const puzzleButtons = Array.from(puzzleContainer.getElementsByTagName('button'));
+
+            puzzleButtons[index].classList.add('lighted');
+
+            if (index > 0) {
+                puzzleButtons[index - 1].classList.add('adjacent');
+            }
+
+            if (index < puzzleButtons.length - 1) {
+                puzzleButtons[index + 1].classList.add('adjacent');
+            }
+
+            const currentRow = Math.floor(index / 10);
+            const currentColumn = index % 10;
+
+            if (currentRow > 0) {
+                puzzleButtons[index - 10].classList.add('adjacent');
+            }
+
+            if (currentRow < 9) {
+                puzzleButtons[index + 10].classList.add('adjacent');
+            }
+
+            resetButtonColors(puzzleButtons, index);
+        }
+
+        function resetButtonColors(puzzleButtons, clickedIndex) {
+            puzzleButtons.forEach((button, index) => {
+                if (index !== clickedIndex) {
+                    button.classList.remove('lighted', 'adjacent');
+                }
+            });
+        }
+
+        setupPuzzle();
+        </script>
+    </body>
+</html>

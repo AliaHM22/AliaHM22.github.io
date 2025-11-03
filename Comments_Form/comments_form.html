@@ -8,5 +8,92 @@
 <body>
     <h1>Comments Form</h1>
     <p>Hi guys!  Alia here!  Please leave a comment!</p>
+   
+    <form id="commentForm">
+        <h2>Contact Information</h2>
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" placeholder="Enter your name"><br><br>
+
+        <label for="phone">Phone number:</label><br>
+        <input type="tel" id="phone" name="phone" placeholder="+1234567890" required pattern="^\+?\d{10,15}$">><br><br> //*placeholder="Enter your phone number"/*
+       
+        <label for="email">Email:</label> 
+        <input type="email" id="email" name="email" placeholder="you@example.com" required><br><br>
+        
+        <label for="comment">Comment:</label><br>
+        <textarea id="comment" name="comment" rows="4" cols="50" placeholder="Enter your comment here"></textarea><br><br>
+
+        <h2>Account Creation</h2>
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" placeholder="letters,_ only,numbers" required><br><br>
+        <p id="usernameMessage">Username requirements</p>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" placeholder="At least 8 characters, 1 uppercase, 1 number" required><br><br>
+        <p id="passwordMessage">Password requirements</p>
+
+        <button type="submit">Submit</button>
+
+        <input type="submit" value="Submit Comment">
+    </form>
+
+    <h3>Sanitized Output</h3> 
+    <div id="output"></div>
+
+    <script>
+        document.getElementById("username").addEventListener("input", function() {
+            const username = this.value;
+            const usernameMessage = document.getElementById("usernameMessage");
+            const usernamePattern = /^[a-zA-Z0-9_]+$/;
+
+            if (!usernamePattern.test(username)) {
+                usernameMessage.textContent = "Username can only contain letters, numbers, and underscores.";
+            } else {
+                usernameMessage.textContent = "Username looks good!";
+            }
+        });
+
+        document.getElementById("password").addEventListener("input", function() {
+            const password = this.value;
+            const passwordMessage = document.getElementById("passwordMessage");
+            const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+            if (!passwordPattern.test(password)) {
+                passwordMessage.textContent = "Password must be at least 8 characters long, contain at least one uppercase letter and one number.";
+            } else {
+                passwordMessage.textContent = "Password looks good!";
+            }
+        });
+
+        function sanitizeInput(input) {
+            const div = document.createElement('div');
+            div.appendChild(document.createTextNode(input));
+            return div.innerHTML;
+        }
+
+        document.getElementById("commentForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const name = sanitizeInput(document.getElementById("name").value);
+            const phone = sanitizeInput(document.getElementById("phone").value);
+            const email = sanitizeInput(document.getElementById("email").value);
+            const comment = sanitizeInput(document.getElementById("comment").value);
+            const username = sanitizeInput(document.getElementById("username").value);
+            const password = sanitizeInput(document.getElementById("password").value);
+
+            const outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = `
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Phone:</strong> ${phone}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Comment:</strong> ${comment}</p>
+                <p><strong>Username:</strong> ${username}</p>
+                <p><strong>Password:</strong> ${'*'.repeat(password.length)}</p>
+            `;
+        });
+
+        
+
+    </script>
 </body>
 </html>

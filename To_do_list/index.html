@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Persistent To-Do List</title>
+</head>
+<body>
+	<h1>Persistent To-Do List</h1>
+	//<p>This lab demonstrates Local Storage, Session Storage, and Cookies.</p> //
+	<hr>
+
+	<h2>To-Do List</h2>
+	<label for="taskInput">Enter Task:</label>
+	<input type="text" id="taskInput" pattern="^[a-zA-Z0-9 ,.'-]+$" placeholder="Enter a task"></input> 
+	<br><br>
+	<button onclick="addTask()">Add Task</button>
+	<button onclick="clearTasks()">Clear All Tasks</button>
+
+	<p><strong>Current Tasks:</strong></p>
+	<ul id="taskList"></ul>
+	<hr>
+
+	<h2>Session Tracking</h2>
+	<p>Total tasks added this session: <span id="sessionCount">0</span></p>
+	<hr>
+
+	<h2>Theme Settings</h2>
+	<button onclick="toggleTheme()">Toggle Light/Dark Mode</button>
+	<hr>
+
+	<h2>Additional</h2>
+	<button onclick="location.reload(true)">Page Refresh</button><br><br>
+	<button onclick="resetAll()">Reset Everything</button>
+
+	<script>
+
+		function setCookie(name, value, days) {
+			let date = new Date();
+			date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+			let expires = "expires=" + date.toUTCString();
+			document.cookie = name + "=" + value + ";" + expires + ";path=/";
+		}
+
+		function getCookie(name) {
+			const cookies = document.cookie.split(';');
+			for (let i = 0; i < cookies.length; i++) {
+				let c = cookies[i].trim();
+				if (c.startsWith(name + "=")) {
+					return c.substring(name.length + 1);
+				}
+			}
+			return null;
+		}
+
+		function toggleTheme() {
+			document.body.classList.toggle("dark-mode");
+			let theme = document.body.classList.contains("dark-mode") ? "dark" : "light";
+			setCookie("theme", theme, 7);
+		}
+
+		function loadTheme() {
+			let theme = getCookie("theme");
+			if (theme === "dark") {
+				document.body.classList.add("dark-mode");
+			}
+		}
+
+		function loadTasks() {
+			let tasks = JSON.parse(localStorage.getItem("tasks"));
+			if (!tasks) {
+				tasks = [];
+			}
+			const taskList = document.getElementById("taskList");
+			taskList.innerHTML = "";
+
+			for (let i = 0; i < tasks.length; i++) {
+				let li = document.createElement("li");
+				li.textContent = tasks[i] + " ";
+				let btn = document.createElement("button");
+				btn.textContent = "Delete";
+				btn.onclick = function () {
+					deleteTask(i);
+				};
+				li.appendChild(btn);
+				taskList.appendChild(li);
+			}
+		}
+
+		function addTask() {
+			let input = document.getElementById("taskInput");
+			if (!input.checkValidity()) {
+				alert("Invalid task input!");
+				return;
+			}
+			let task = input.value.trim();
+			if (task === "") {
+				alert("Task cannot be empty!");
+				return;
+			}
+
+			let tasks = JSON.parse(localStorage.getItem("tasks"));
+			if (!tasks) {
+				tasks = [];
+			}
+			tasks.push(task);
+			localStorage.setItem("tasks", JSON.stringify(tasks));
+			input.value = "";
+
+			incrementSessionCount();
+			loadTasks();
+		}
+
+		function deleteTask(index) {
+			let tasks = JSON.parse(localStorage.getItem("tasks"));
+			tasks.splice(index, 1);
+			localStorage.setItem("tasks", JSON.stringify(tasks));
+			loadTasks();
+		}
+
+		function clearTasks() {
+			localStorage.removeItem("tasks");
+			loadTasks();
+		}
+
+		function incrementSessionCount() {
+			let count = sessionStorage.getItem("taskCount");
+			count = count ? parseInt(count) + 1 : 1;
+			sessionStorage.setItem("taskCount", count);
+			document.getElementById("sessionCount").textContent = count;
+		}
+
+		function loadSessionCount() {
+			let count = sessionStorage.getItem("taskCount");
+			count = count ? count : 0;
+			document.getElementById("sessionCount").textContent = count;
+		}
+
+		function resetAll() {
+			let confirmReset = confirm("Are you sure you want to clear all data?");
+			if (confirmReset) {
+				localStorage.clear();
+				sessionStorage.clear();
+				document.cookie = "theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+				location.reload(true);
+			}
+		}
+
+		window.onload = function() {
+			loadTheme();
+			loadTasks();
+			loadSessionCount();
+		};
+	</script>
+
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 2rem;
+			transition: background-color 0.3s, color 0.3s;
+		}
+
+		.dark-mode {
+			background-color: #222;
+			color: white;
+		}
+
+		button {
+			margin: 3px;
+			padding: 5px 10px;
+			cursor: pointer;
+		}
+
+		li {
+			margin-bottom: 5px;
+		}
+	</style>
+</body>
+</html>

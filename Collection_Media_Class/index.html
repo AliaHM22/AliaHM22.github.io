@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Collection</title>
+    <style>
+        .book-box {
+            border: 1px solid #444;
+            width: 200px;
+            padding: 10px;
+            margin: 10px;
+        }
+        .book-box img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<h1>My Book Collection</h1>
+<div id="media-container"></div>
+
+<script>
+
+let jsonBooks = `
+[
+    {"title": "The Stand", "author": "Stephen King", "price": 19.99, "image": "images/book1.jpg"},
+    {"title": "Jurassic Park", "author": "Michael Crichton", "price": 8.99, "image": "images/book2.jpg"},
+    {"title": "Killing Floor", "author": "Lee Child", "price": 11.99, "image": "images/book3.jpg"}
+]
+`;
+
+class Book {
+
+    #price;
+
+    constructor(title, author, price, image) {
+        this.title = title;
+        this.author = author;
+        this.image = image;
+        this.price = price;
+    }
+
+    get price() {
+        return this.#price;
+    }
+
+    set price(value) {
+        if (value < 0) {
+            this.#price = 0;
+        } else {
+            this.#price = value;
+        }
+    }
+
+    toString() {
+        return this.title + " by " + this.author + " ($" + this.price + ")";
+    }
+
+    buildElement() {
+
+        let box = document.createElement("div");
+        box.className = "book-box";
+
+        let img = document.createElement("img");
+        img.src = this.image;
+
+        let t = document.createElement("h3");
+        t.textContent = this.title;
+
+        let a = document.createElement("p");
+        a.textContent = "Author: " + this.author;
+
+        let p = document.createElement("p");
+        p.textContent = "Price: $" + this.price;
+
+        box.appendChild(img);
+        box.appendChild(t);
+        box.appendChild(a);
+        box.appendChild(p);
+
+        return box;
+    }
+}
+
+let parsed = JSON.parse(jsonBooks);
+let bookObjects = [];
+
+parsed.forEach(function(b) {
+    let temp = new Book(b.title, b.author, b.price, b.image);
+    bookObjects.push(temp);
+});
+
+let container = document.getElementById("media-container");
+
+bookObjects.forEach(function(book) {
+    let element = book.buildElement();
+    container.appendChild(element);
+});
+
+</script>
+
+</body>
+</html>
